@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-md navbar-light fixed-top navbar-shrink" id="mainNav">
+  <div class="container">
+    <li class="nav-item">
+      <a class="navbar-brand"(click)="goHome()">Relax Flights</a>
+    </li>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleCollapsed()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarResponsive" [ngClass]="{'collapse': collapsed, 'navbar-collapse': true}">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" [ngx-scroll-to]="'#menu'">Menu</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [ngx-scroll-to]="'#about'">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"[ngx-scroll-to]="'#technologies'">Technologies</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
