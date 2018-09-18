@@ -1,0 +1,100 @@
+<app-app-navbar></app-app-navbar>
+<section id="movie">
+    <div class="container">
+        <ng-template #content let-c="close" let-d="dismiss">
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title"></h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Type your identification number to buy the ticket</p>
+            <input type="text" class="form-control" [(ngModel)]='identification'/>
+            <p>(You must be of legal age to buy a ticket through this platform, just press accept if it is*)</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="buyTicket(ticket_selected, identification );c('Close click')">Accept</button>
+          </div>
+        </ng-template>
+        <div *ngIf="flight"class="center-block text-center"> 
+            <h2>{{ flight.month }}/{{ flight.day  }}/{{ flight.year  }} - {{ flight.hour  }}:{{ flight.minute  }}</h2>
+            <h2>{{ flight.start}}-{{ flight.destination}}</h2>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-sm-12 col-lg-4">
+                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+                    <input class="btn btn-outline-primary btn-sm" type="button" value="Clear filters" (click)="clearFilters()">
+                    <div class="form-group">
+                        <label for="min"><strong>Price</strong></label>
+                        <input
+                            class="form-control" id="min"
+                            type='text'
+                            [(ngModel)]='min'
+                            placeholder='Min'
+                            (keyup)="filter()"
+                        />
+                        <input
+                            class="form-control" id="max"
+                            type='text'
+                            [(ngModel)]='max'
+                            placeholder='Max'
+                            (keyup)="filter()"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="category"><strong>Category</strong></label>
+                            <select [(ngModel)]="category" class="form-control" (ngModelChange)="filter()">
+                                <option *ngFor="let category of categories" value="{{ category }}" >
+                                    {{ category }}  
+                                </option>
+                            </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-8 col-sm-12 col-lg-8">
+                <ngx-datatable class="material" #table
+                    [columnMode]="'force'"
+                    [headerHeight]="50"
+                    [footerHeight]="50"
+                    [rowHeight]="'auto'"
+                    [rows]="tickets_temp"
+                    [columns]="columns"
+                    [limit]="5">
+                    <ngx-datatable-column name="Number">
+                      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                         <strong (click)="sort()">Chair Number</strong>
+                      </ng-template>
+                      <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value}}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Category">
+                      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                         <strong (click)="sort()">{{column.name}}</strong>
+                      </ng-template>
+                      <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value}}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Price">
+                      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                         <strong (click)="sort()">{{column.name}}</strong>
+                      </ng-template>
+                      <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value}}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="_id">
+                      <ng-template let-column="column" ngx-datatable-header-template>
+                      </ng-template>
+                      <ng-template let-value="value" ngx-datatable-cell-template>
+                          <input class="btn btn-primary btn-sm" type="button" value="Buy" (click)="open(content, value)">
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+            </div>
+        </div>
+    </div>
+  </section>
+<app-footer></app-footer>

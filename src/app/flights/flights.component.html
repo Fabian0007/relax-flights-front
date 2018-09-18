@@ -1,0 +1,81 @@
+<app-app-navbar></app-app-navbar>
+<section id="movie">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-4 col-sm-12 col-lg-4">
+                <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+                    <input class="btn btn-outline-primary btn-sm" type="button" value="Clear filters" (click)="clearFilters()">
+                    <div class="form-group">
+                        <label for="start"><strong>Start</strong></label>
+                        <input
+                            class="form-control" id="start"
+                            type='text'
+                            [(ngModel)]='start'
+                            placeholder='Type to filter the start column...'
+                            (keyup)="filter()"
+                        />
+                    </div>
+                    <div class="form-group">
+                       <label for="destination"><strong>Destination</strong></label>
+                        <input
+                            class="form-control" id="destination"
+                            type='text'
+                            [(ngModel)]='destination'
+                            placeholder='Type to filter the destination column...'
+                            (keyup)="filter()"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Select the date</strong></label>
+                        <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12">
+                            <ngb-datepicker #dp [(ngModel)]="date" (select)="filter()"></ngb-datepicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-8 col-sm-12 col-lg-8">
+                <ngx-datatable class="material" #table
+                    [columnMode]="'force'"
+                    [headerHeight]="50"
+                    [footerHeight]="50"
+                    [rowHeight]="'auto'"
+                    [rows]="flights_temp"
+                    [columns]="columns"
+                    [limit]="5">
+                    <ngx-datatable-column name="Date">
+                      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                         <strong (click)="sort()">{{column.name}}</strong>
+                      </ng-template>
+                      <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value.toLocaleDateString("en-US") + " - " + value.toTimeString().split(' ')[0]}}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Start">
+                      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                         <strong (click)="sort()">{{column.name}}</strong>
+                      </ng-template>
+                      <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value}}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="Destination">
+                      <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                         <strong (click)="sort()">{{column.name}}</strong>
+                      </ng-template>
+                      <ng-template let-value="value" ngx-datatable-cell-template>
+                        {{value}}
+                      </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column name="_id">
+                      <ng-template let-column="column" ngx-datatable-header-template>
+                      </ng-template>
+                      <ng-template let-value="value" ngx-datatable-cell-template>
+                          <input class="btn btn-primary btn-sm" type="button" value="see tickets" (click)="goToTickets(value)">
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+            </div>
+        </div>
+    </div>
+  </section>
+<app-footer></app-footer>
