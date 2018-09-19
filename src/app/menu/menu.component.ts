@@ -14,11 +14,13 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
   }
   
-  goMap(): void {
-    this.router.navigate(['/map/']);
+  goFlights(): void {
+    this.router.navigate(['/flights/']);
+    window.scrollTo(0, 0);
   }
   
-  goDataVisualization(): void {
-    this.router.navigate(['/datavisualization/']);
+  goToYourFlights(): void {
+    this.router.navigate(['/yourflights/']);
+    window.scrollTo(0, 0);
   }
 }

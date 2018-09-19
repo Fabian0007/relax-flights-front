@@ -22,11 +22,21 @@ import { HttpModule } from '@angular/http';
 import { MenuComponent } from './menu/menu.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
+import { FlightsComponent } from './flights/flights.component';
 
+import { RequestService } from './request.service';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { BuyTicketsComponent } from './buy-tickets/buy-tickets.component';
+import { YourFlightsComponent } from './your-flights/your-flights.component';
+import {ToastModule} from 'ng2-toastr/ng2-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
   { path: '',  component: HomeComponent },
 	{ path: 'home',  component: HomeComponent },
+	{ path: 'flights', component: FlightsComponent },
+	{ path: 'tickets/:id', component: BuyTicketsComponent },
+	{ path: 'yourflights', component: YourFlightsComponent },
 ];
 
 @NgModule({
@@ -38,10 +48,15 @@ const appRoutes: Routes = [
     TechnologiesComponent,
     MenuComponent,
     HomeComponent,
-    FooterComponent
+    FooterComponent,
+    FlightsComponent,
+    BuyTicketsComponent,
+    YourFlightsComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule, 
+    ToastModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     NgbModule.forRoot(),
@@ -53,9 +68,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
       { enableTracing: true } // <-- debugging purposes only
-    )
+    ),
+    NgxDatatableModule
   ],
-  providers: [],
+  providers: [RequestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

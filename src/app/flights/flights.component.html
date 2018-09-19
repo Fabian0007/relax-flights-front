@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-8 col-sm-12 col-lg-8">
+            <div [hidden]="!flights_temp" class="col-xs-12 col-md-8 col-sm-12 col-lg-8">
                 <ngx-datatable class="material" #table
                     [columnMode]="'force'"
                     [headerHeight]="50"
@@ -70,7 +70,7 @@
                       <ng-template let-column="column" ngx-datatable-header-template>
                       </ng-template>
                       <ng-template let-value="value" ngx-datatable-cell-template>
-                          <input class="btn btn-primary btn-sm" type="button" value="see tickets" (click)="goToTickets(value)">
+                          <input class="btn btn-primary btn-sm" type="button" value="Buy" (click)="goToTickets(value)">
                       </ng-template>
                     </ngx-datatable-column>
                   </ngx-datatable>

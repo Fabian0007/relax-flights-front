@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-app-navbar',
@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class AppNavbarComponent implements OnInit {
   collapsed :boolean;
+  @Input() home;
   
   toggleCollapsed(): void {
     this.collapsed = !this.collapsed;

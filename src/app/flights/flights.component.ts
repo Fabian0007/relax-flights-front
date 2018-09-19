@@ -13,7 +13,7 @@ export class FlightsComponent implements OnInit {
   start: string = "";
   date: any = "";
   flights: Array<Object> = [];
-  flights_temp : Array<Object> = [];
+  flights_temp : Array<Object> = null;
   columns: Array<Object> = [{prop: 'start'}, {name: 'destination'}];
   constructor(private requestService: RequestService, private route: ActivatedRoute,
   		private router: Router) { }
@@ -22,7 +22,6 @@ export class FlightsComponent implements OnInit {
     this.requestService.getFlights()
       .subscribe(flights => {
         this.flights = flights;
-        console.log(flights)
         if(this.flights){
            for (var i = 0; i < this.flights.length; i++){
             var obj:Object = this.flights[i];
@@ -31,25 +30,18 @@ export class FlightsComponent implements OnInit {
           }
         }
         this.flights_temp = this.flights.slice()
-        console.log(this.flights_temp)
       });
   }
   
   goToTickets(id: string): void {
-    console.log(id)
     this.router.navigate(['/tickets/'+id]);
-  }
-  
-  onDateSelect(event): void {
-    console.log(event)
+    window.scrollTo(0, 0);
   }
   
   filter() {
     var destination:string = this.destination;
     var start:string = this.start;
     var date:string = this.date;
-    console.log(date=={})
-    console.log(start)
     this.flights_temp = this.flights.filter(function(d) {
       return (d['start'].toLowerCase().indexOf(start.toLowerCase()) !== -1 || !start) && (d['date'].toLocaleDateString("en-US").indexOf(date['month']+"/"+date['day']+"/"+date['year']) !== -1 || !date) && (d['destination'].toLowerCase().indexOf(destination.toLowerCase()) !== -1 || !destination);
     });

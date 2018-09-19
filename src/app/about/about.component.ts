@@ -6,17 +6,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent implements OnInit {
-
-  constructor() { }
-
+  constructor () { }
+  
   ngOnInit() {
   }
   
-  goToTmdb() : void {
-     window.open("https://www.themenudb.org/");
-  }
-  
-  goToGitHub() : void {
-     window.open("https://github.com/Fabian0007/relax-flights-front");
+  goToTech() : void {
+     window.open("http://www.techandsolve.com/");
   }
 }

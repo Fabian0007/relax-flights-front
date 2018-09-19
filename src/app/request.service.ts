@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map'
 
 @Injectable()
 export class RequestService {
-  private url = "https://relax-flights-backend-fabian0007.c9users.io/api";
+  private url = "https://relax-flights.herokuapp.com/api";
 
   constructor(private http: Http) {
    }
@@ -14,7 +14,6 @@ export class RequestService {
     var request =`${this.url}/flights/`;
     return this.http.get(request)
       .map(response => {
-          console.log(response.json())
         return response.json();
       });
   }
@@ -39,7 +38,22 @@ export class RequestService {
     var request =`${this.url}/tickets/${id}/${client}`;
     return this.http.put(request, "")
       .map(response => {
-        console.log(response)
+        return response.json();
+      });
+  }
+  
+  findLastTicket(client:string): Observable<any> {
+    var request =`${this.url}/tickets-information/${client}`;
+    return this.http.get(request, "")
+      .map(response => {
+        return response.json();
+      });
+  }
+  
+  findTickets(id:string): Observable<any> {
+    var request =`${this.url}/yourtickets/${id}`;
+    return this.http.get(request)
+      .map(response => {
         return response.json();
       });
   }

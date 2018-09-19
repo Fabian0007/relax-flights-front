@@ -1,0 +1,87 @@
+<app-app-navbar></app-app-navbar>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-4 col-sm-12 col-lg-4 text-center">
+                    <div class="form-group">
+                        <label for="idenfitication"><strong>Identification number</strong></label>
+                        <input
+                            class="form-control input-sm" id="idenfitication"
+                            type='text'
+                            [(ngModel)]='identification'
+                            placeholder='Type your identification number...'
+                            (keyup)="findTickets()"
+                        />
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-8 col-sm-12 col-lg-8">
+                    <ngx-datatable class="material" #table
+                        [columnMode]="'force'"
+                        [headerHeight]="50"
+                        [footerHeight]="50"
+                        [rowHeight]="'auto'"
+                        [rows]="tickets"
+                        [columns]="columns"
+                        [limit]="5">
+                        <ngx-datatable-column name="Date">
+                          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                             <strong (click)="sort()">{{column.name}}</strong>
+                          </ng-template>
+                          <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{value.toLocaleDateString("en-GB") + " - " + value.toTimeString().split(' ')[0]}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Sold">
+                          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                             <strong (click)="sort()">{{column.name}}</strong>
+                          </ng-template>
+                          <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{value}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Start">
+                          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                             <strong (click)="sort()">{{column.name}}</strong>
+                          </ng-template>
+                          <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{value}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Destination">
+                          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                             <strong (click)="sort()">{{column.name}}</strong>
+                          </ng-template>
+                          <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{value}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Number">
+                          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                             <strong (click)="sort()">Chair Number</strong>
+                          </ng-template>
+                          <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{value}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Category">
+                          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                             <strong (click)="sort()">{{column.name}}</strong>
+                          </ng-template>
+                          <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{value}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                        <ngx-datatable-column name="Price">
+                          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                             <strong (click)="sort()">{{column.name}}</strong>
+                          </ng-template>
+                          <ng-template let-value="value" ngx-datatable-cell-template>
+                            {{value}}
+                          </ng-template>
+                        </ngx-datatable-column>
+                    </ngx-datatable>
+                </div>
+            </div>
+        </div>
+    </section>
+<app-footer></app-footer>

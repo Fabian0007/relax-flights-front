@@ -18,7 +18,7 @@
           </div>
         </ng-template>
         <div *ngIf="flight"class="center-block text-center"> 
-            <h2>{{ flight.month }}/{{ flight.day  }}/{{ flight.year  }} - {{ flight.hour  }}:{{ flight.minute  }}</h2>
+            <h2>{{ flight.day  }}/{{ flight.month }}/{{ flight.year  }} - {{ flight.hour  }}:{{ flight.minute  }}</h2>
             <h2>{{ flight.start}}-{{ flight.destination}}</h2>
         </div>
         <div class="row">
@@ -52,7 +52,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-8 col-sm-12 col-lg-8">
+            <div [hidden]="!tickets_temp" class="col-xs-12 col-md-8 col-sm-12 col-lg-8">
                 <ngx-datatable class="material" #table
                     [columnMode]="'force'"
                     [headerHeight]="50"

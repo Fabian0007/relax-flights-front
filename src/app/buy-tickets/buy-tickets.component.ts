@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef} from '@angular/core';
 import { RequestService } from '../request.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Component({
   selector: 'app-buy-tickets',
@@ -11,7 +12,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class BuyTicketsComponent implements OnInit {
   tickets: Array<Object> = [];
-  tickets_temp: Array<Object> = [];
+  tickets_temp: Array<Object> = null;
   flight: string = "";
   columns: Array<Object> = [{prop: 'chair_number'}, {name: 'category'}];
   categories: Array<string> = ["Economy Class", "Premium Economy", "Business Class", "First Class"];
@@ -20,10 +21,11 @@ export class BuyTicketsComponent implements OnInit {
   category: string = "";
   closeResult: string;
   ticket_selected: string;
-  
+  identification: string;
 
   constructor(private requestService: RequestService, private route: ActivatedRoute,
-  		private router: Router, private modalService: NgbModal){
+  		private router: Router, private modalService: NgbModal, public toastr: ToastsManager, vcr: ViewContainerRef){
+  		  this.toastr.setRootViewContainerRef(vcr);
   		}
 
   ngOnInit(){
@@ -49,18 +51,48 @@ export class BuyTicketsComponent implements OnInit {
   }
   
   buyTicket(id: string, client:string): void {
-      this.requestService.buyTicket(id, client).subscribe(tickets => {
-        console.log(tickets)
+    if(client){
+      this.requestService.findLastTicket(client).subscribe(tickets => {
+        if(tickets.length > 0){
+          
+          if(new Date(tickets[0]['date_sold']).toDateString() == new Date().toDateString()){
+            this.toastr.error('A purchase has already been made today!', 'Oops!');
+            this.identification = "";
+          }
+          else{
+            this.requestService.buyTicket(id, client).subscribe(tickets => {
+            });
+            this.toastr.success('The ticket was successfully purchased!', 'Success!');
+            this.tickets = this.tickets.filter(function(d) {
+              return (d['id'] != id);
+            });
+            this.tickets_temp = this.tickets;
+            this.identification = "";
+          }
+        }
+        else{
+           this.requestService.buyTicket(id, client).subscribe(tickets => {
+          });
+          this.toastr.success('The ticket was successfully purchased!', 'Success!');
+          this.tickets = this.tickets.filter(function(d) {
+              return (d['id'] != id);
+            });
+          this.tickets_temp = this.tickets;
+          this.identification = "";
+        }
       });
+    }
+    else{
+      this.toastr.error('The identification number must be different than empty!', 'Oops!');
+    }
   }
   
   filter() {
     var min:number = this.min;
     var max:number = this.max;
     var category:string = this.category;
-    console.log(category)
     this.tickets_temp = this.tickets.filter(function(d) {
-      return (d['price'] > min || !min) && (d['price'] < max  || !max) && (d['category'] == category || !category);
+      return (d['price'] >= min || !min) && (d['price'] <= max  || !max) && (d['category'] == category || !category);
     });
   }
   
@@ -77,6 +109,7 @@ export class BuyTicketsComponent implements OnInit {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      this.identification = "";
     });
   }
   
