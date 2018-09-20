@@ -47,7 +47,7 @@
                          <strong (click)="sort()">{{column.name}}</strong>
                       </ng-template>
                       <ng-template let-value="value" ngx-datatable-cell-template>
-                        {{value.toLocaleDateString("en-US") + " - " + value.toTimeString().split(' ')[0]}}
+                        {{value.toLocaleDateString("en-GB") + " - " + value.toTimeString().split(' ')[0]}}
                       </ng-template>
                     </ngx-datatable-column>
                     <ngx-datatable-column name="Start">

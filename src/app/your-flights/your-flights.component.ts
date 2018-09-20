@@ -39,7 +39,7 @@ export class YourFlightsComponent implements OnInit {
                 mm='0'+mm;
             } 
             obj['sold'] = dd+'/'+mm+'/'+yyyy;
-            obj['date'] = new Date(obj['flight']['year'], obj['flight']['month'], obj['flight']['day'], obj['flight']['hour'], obj['flight']['minute'])
+            obj['date'] = new Date(obj['flight']['year'], parseInt(obj['flight']['month']) - 1, obj['flight']['day'], obj['flight']['hour'], obj['flight']['minute'])
           }
         }
       });

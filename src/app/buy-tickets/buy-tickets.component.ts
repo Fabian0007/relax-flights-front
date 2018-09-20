@@ -52,26 +52,40 @@ export class BuyTicketsComponent implements OnInit {
   
   buyTicket(id: string, client:string): void {
     if(client){
-      this.requestService.findLastTicket(client).subscribe(tickets => {
+      var ticket_selected = null;
+      for (var i = 0; i < this.tickets.length; i++){
+        var obj:Object = this.tickets[i];
+        if (obj['id'] == id) {
+          ticket_selected = obj;
+        }
+      }
+      this.requestService.findTickets(client).subscribe(tickets => {
         if(tickets.length > 0){
-          
-          if(new Date(tickets[0]['date_sold']).toDateString() == new Date().toDateString()){
-            this.toastr.error('A purchase has already been made today!', 'Oops!');
-            this.identification = "";
+          var valid = true;
+          for (var i = 0; i < tickets.length; i++){
+            var obj:Object = tickets[i];
+            if(obj['flight']['day'] == ticket_selected['flight']['day'] && obj['flight']['month'] == ticket_selected['flight']['month'] && obj['flight']['year'] == ticket_selected['flight']['year']) {
+              valid = false;
+              break;
+            }
           }
-          else{
+          if(valid){
             this.requestService.buyTicket(id, client).subscribe(tickets => {
             });
             this.toastr.success('The ticket was successfully purchased!', 'Success!');
             this.tickets = this.tickets.filter(function(d) {
-              return (d['id'] != id);
-            });
+                return (d['id'] != id);
+              });
             this.tickets_temp = this.tickets;
             this.identification = "";
           }
+          else{
+            this.identification = "";
+            this.toastr.error('You already have a ticket bought for that day', 'Oops!');
+          }
         }
         else{
-           this.requestService.buyTicket(id, client).subscribe(tickets => {
+          this.requestService.buyTicket(id, client).subscribe(tickets => {
           });
           this.toastr.success('The ticket was successfully purchased!', 'Success!');
           this.tickets = this.tickets.filter(function(d) {

@@ -26,7 +26,7 @@ export class FlightsComponent implements OnInit {
            for (var i = 0; i < this.flights.length; i++){
             var obj:Object = this.flights[i];
             obj['id'] = obj['_id'];
-            obj['date'] = new Date(obj['year'], obj['month'], obj['day'], obj['hour'], obj['minute'])
+            obj['date'] = new Date(obj['year'], parseInt(obj['month']) - 1, obj['day'], obj['hour'], obj['minute'])
           }
         }
         this.flights_temp = this.flights.slice()
