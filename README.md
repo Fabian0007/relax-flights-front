@@ -1,6 +1,10 @@
 # Relax Flights
 
-his project was developed as part of the selection process for the vacancy "Front-end Developer"
+Relax Flights is an Angular 5 application built in order to consume an api for the purchase of airline tickets.
+[Front app]( https://fabian0007.github.io/relax-flights-front/)
+[Back app](https://relax-flights.herokuapp.com/)
+
+The backend application repository is [here](https://github.com/Fabian0007/relax-flights-back)
 
 ## Development server
 
